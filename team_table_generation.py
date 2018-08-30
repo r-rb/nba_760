@@ -3,6 +3,7 @@ import pandas as pd
 import pickle
 import seaborn as sns
 import numpy as np
+from random_scripts.processing_constants import team
 
 def team_data_frame():
     df = pickle.load(open('./big_data/cleaned_table.pkl','rb'))
@@ -15,12 +16,12 @@ def team_data_frame():
         td_dict[c[1]] = []
 
     for i in range(0, len(df)):
-            if df.iloc[i]['team_id_home_team'] not in td_dict: 
+            if df.iloc[i]['team_id_home_team'] not in td_dict and df.iloc[i]['team_id_home_team'] != 'Bobcats': 
                 td_dict[df.iloc[i]['team_id_home_team']] = []  
                 for c in columns:
                     td_dict[c[1]].append(df.iloc[i][c[2]])
 
-    peedee = pd.DataFrame(td_dict, columns=['team_id','team_abbreviation','team_name'])
+    peedee = pd.DataFrame(td_dict, columns=team)
     peedee = pickle.dump(peedee,open('./team.pkl','wb'))
     pass
 
