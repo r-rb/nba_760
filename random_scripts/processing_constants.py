@@ -8,7 +8,6 @@ away_team_linescore = ['game_date_est_away_team', 'game_id_away_team', 'game_seq
 away_team_otherstats =['largest_lead_away_team', 'lead_changes_away_team', 'league_id_away_team', 'pts_2nd_chance_away_team', 'pts_fb_away_team', 'pts_off_to_away_team', 'pts_paint_away_team', 'team_abbreviation_away_team', 'team_city_away_team', 'team_id_away_team', 'team_rebounds_away_team', 'team_turnovers_away_team', 'times_tied_away_team', 'total_turnovers_away_team']
 away_team_teamstats = ['ast_away_team', 'blk_away_team', 'dreb_away_team', 'fg3a_away_team', 'fg3m_away_team', 'fg3_pct_away_team', 'fga_away_team', 'fgm_away_team', 'fg_pct_away_team', 'fta_away_team', 'ftm_away_team', 'ft_pct_away_team', 'game_id_away_team', 'min_away_team', 'oreb_away_team', 'pf_away_team', 'plus_minus_away_team', 'pts_away_team', 'reb_away_team', 'stl_away_team', 'team_abbreviation_away_team', 'team_city_away_team', 'team_id_away_team', 'team_name_away_team', 'to_away_team']
 
-
 # ['ast', 
 # 'blk',
 # 'comment', 
@@ -37,4 +36,4 @@ away_team_teamstats = ['ast_away_team', 'blk_away_team', 'dreb_away_team', 'fg3a
 # 'team_city', 
 # 'team_id', 
 # 'to']
-team = ['team_id', 'team_abbreviation', 'team_name']
+# team = ['team_id', 'team_abbreviation', 'team_name']

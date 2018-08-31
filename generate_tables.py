@@ -15,7 +15,7 @@ def player_game_info(df):
     
     ps_dict = {}
     ps_dict['gid'] = []
-
+    ps_dict["game_date"] =[]
     for c in player_cols:
         ps_dict[c] = []
 
@@ -26,10 +26,12 @@ def player_game_info(df):
             print(count)
         count += 1
         gid = row["game_id"]
+        game_date = row["game_date"]
         for tt in team_types:
             for n in range(1,16):
                 if not pd.isnull(row["player_id" + tt + str(n)]):
                     ps_dict["gid"].append(gid)
+                    ps_dict["game_date"].append(game_date)
                     for c in player_cols:
                         col = c + tt + str(n)
                         ps_dict[c].append(row[col])
@@ -59,6 +61,7 @@ def game_info_table(df):
             print(count)
         count += 1
         gid = row["game_id"]
+        game_date = row["game_date"]
         for tt in team_types:
             ps_dict["gid"].append(gid)
             for c in player_cols:
@@ -73,8 +76,10 @@ def game_info_table(df):
     new_df = pd.DataFrame.from_dict(ps_dict)
     pickle.dump(new_df,open("./team_game_stats.pkl","wb"))
     print(new_df)
-                    
+
 df = pickle.load(open('./complete_df.pkl','rb'))
+
+player_game_info(df)
 
 # game_info_table(df)
 
