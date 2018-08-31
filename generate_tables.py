@@ -100,20 +100,57 @@ def team_data_frame():
     pass
 
 def player_table():
+
+    df = pickle.load(open('./player_game_stats_with_dates.pkl','rb'))
+    players = pd.read_pickle('./data/player_set.pkl')
+    pdc_dict={}
+    pdc_dict['player_id']=[]
+    columns = [{1:'player_id', 2:'player_id'},
+     {1:'player_name', 2:'player_name'}]
+    for c in columns:
+        pdc_dict[c[1]] = []
+    pdc_dict['active_start'] = []
+    pdc_dict['active_end'] = []
+
+    count = 0
+    removed_keys = []
+    names = []
+    for i in range(0, 50000):
+        if not(count% 100):
+            print(count)
+
+        count += 1
+        try:                
+            years = players[df.iloc[i]['player_id']]
+            if df.iloc[i]['player_id'] not in pdc_dict: 
+                pdc_dict[df.iloc[i]['player_id']] = []
+                for c in columns:
+                    pdc_dict[c[1]].append(df.iloc[i][c[2]])
+                    pdc_dict['active_start'].append(years['active_start'])
+                    pdc_dict['active_end'].append(years['active_end'])
+        except KeyError as e:
+            names.append(df.iloc[i]['player_name'])
+            removed_keys.append(df.iloc[i]['player_id'])
+
+
+    print(removed_keys)
+    df = pd.DataFrame(pdc_dict, columns=['player_id', 'player_name', 'active_start', 'active_end'])
+    df.sort_values('player_id', inplace=True)
+    pickle.dump(df,open('./player.pkl','wb'))
     pass
 
 def game_table():
     
     df = pickle.load(open('./cleaned_table.pkl','rb'))
-    td_dict={}
-    td_dict['game_id']=[]
+    gd_dict={}
+    gd_dict['game_id']=[]
     columns = [{1:'game_id', 2:'game_id'},
      {1:'home_team_id', 2:'team_id_home_team'},
      {1:'away_team_id', 2:'team_id_away_team'},
      {1:'winning_team_id', 2:'winning_team_id'},
      {1:'game_date', 2:'game_date'}]
     for c in columns:
-        td_dict[c[1]] = []
+        gd_dict[c[1]] = []
 
     count = 0
     for i in range(0, len(df)):
@@ -121,21 +158,21 @@ def game_table():
             print(count)
 
         count += 1
-        if df.iloc[i]['game_id'] not in td_dict: 
-            td_dict[df.iloc[i]['game_id']] = []  
+        if df.iloc[i]['game_id'] not in gd_dict: 
+            gd_dict[df.iloc[i]['game_id']] = []  
             for c in columns:
                 if c[1] == 'winning_team_id':
-                    td_dict[c[1]].append(df.iloc[i]['team_id_home_team'] if df.iloc[i]['pts_home_team_1'] > df.iloc[i]['pts_away_team_1'] else df.iloc[i]['team_id_away_team'])
+                    gd_dict[c[1]].append(df.iloc[i]['team_id_home_team'] if df.iloc[i]['pts_home_team_1'] > df.iloc[i]['pts_away_team_1'] else df.iloc[i]['team_id_away_team'])
                 else:
-                    td_dict[c[1]].append(df.iloc[i][c[2]])
+                    gd_dict[c[1]].append(df.iloc[i][c[2]])
 
-    df = pd.DataFrame(td_dict, columns=['game_id', 'home_team_id', 'away_team_id', 'winning_team_id', 'game_date'])
+    df = pd.DataFrame(gd_dict, columns=['game_id', 'home_team_id', 'away_team_id', 'winning_team_id', 'game_date'])
     print(df)
     pickle.dump(df,open('./game.pkl','wb'))
     pass
 
 #df = pickle.load(open('./complete_df.pkl','rb'))
-game_table()
+player_table()
 
 
 
