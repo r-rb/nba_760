@@ -77,9 +77,67 @@ def game_info_table(df):
     pickle.dump(new_df,open("./team_game_stats.pkl","wb"))
     print(new_df)
 
-df = pickle.load(open('./complete_df.pkl','rb'))
+def team_data_frame():
+    #My shit code
+    df = pickle.load(open('./cleaned_table.pkl','rb'))
+    td_dict={}
+    td_dict['t_id']=[]
+    columns = [{1:'team_id', 2:'team_id_home_team'},
+     {1:'team_abbreviation', 2:'team_abbreviation_home_team'},
+     {1:'team_name', 2:'team_name_home_team'}]
+    for c in columns:
+        td_dict[c[1]] = []
 
-player_game_info(df)
+    for i in range(0, len(df)):
+            if df.iloc[i]['team_id_home_team'] not in td_dict and df.iloc[i]['team_id_home_team'] != 'Bobcats': 
+                td_dict[df.iloc[i]['team_id_home_team']] = []  
+                for c in columns:
+                    td_dict[c[1]].append(df.iloc[i][c[2]])
+
+    df = pd.DataFrame(td_dict, columns=['team_id', 'team_abbreviation', 'team_name'])
+    print(df)
+    pickle.dump(df,open('./team.pkl','wb'))
+    pass
+
+def player_table():
+    pass
+
+def game_table():
+    
+    df = pickle.load(open('./cleaned_table.pkl','rb'))
+    td_dict={}
+    td_dict['game_id']=[]
+    columns = [{1:'game_id', 2:'game_id'},
+     {1:'home_team_id', 2:'team_id_home_team'},
+     {1:'away_team_id', 2:'team_id_away_team'},
+     {1:'winning_team_id', 2:'winning_team_id'},
+     {1:'game_date', 2:'game_date'}]
+    for c in columns:
+        td_dict[c[1]] = []
+
+    count = 0
+    for i in range(0, len(df)):
+        if not(count% 100):
+            print(count)
+
+        count += 1
+        if df.iloc[i]['game_id'] not in td_dict: 
+            td_dict[df.iloc[i]['game_id']] = []  
+            for c in columns:
+                if c[1] == 'winning_team_id':
+                    td_dict[c[1]].append(df.iloc[i]['team_id_home_team'] if df.iloc[i]['pts_home_team_1'] > df.iloc[i]['pts_away_team_1'] else df.iloc[i]['team_id_away_team'])
+                else:
+                    td_dict[c[1]].append(df.iloc[i][c[2]])
+
+    df = pd.DataFrame(td_dict, columns=['game_id', 'home_team_id', 'away_team_id', 'winning_team_id', 'game_date'])
+    print(df)
+    pickle.dump(df,open('./game.pkl','wb'))
+    pass
+
+#df = pickle.load(open('./complete_df.pkl','rb'))
+game_table()
+
+
 
 # game_info_table(df)
 

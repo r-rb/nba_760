@@ -36,4 +36,4 @@ away_team_teamstats = ['ast_away_team', 'blk_away_team', 'dreb_away_team', 'fg3a
 # 'team_city', 
 # 'team_id', 
 # 'to']
-# team = ['team_id', 'team_abbreviation', 'team_name']
+
