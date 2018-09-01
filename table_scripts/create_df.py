@@ -8,10 +8,10 @@ from random_scripts.processing_constants import *
 
 
 def load_raw_data():
-	return pickle.load(open('./data/game_data_total.pkl','rb'))
+	return pickle.load(open('../data/game_data_total.pkl','rb'))
 
 def load_sample_data():
-	return pickle.load(open('./data/sample_data.pkl','rb'))
+	return pickle.load(open('../data/sample_data.pkl','rb'))
 
 def pickle_sample(data,sample_size = 10):
 	pickle.dump({k:data[k] for k in random.sample(list(data.keys()),sample_size)},open('./data/sample_data.pkl','wb'))
@@ -48,10 +48,10 @@ def teamstat_columns(entry,team_specific_stats,home_team_id,away_team_id):
 
 if __name__ == '__main__':
 	t0 = time.time()
-	data = pickle.load(open('./merged_data.pkl','rb'))
+	data = pickle.load(open('../pickled_data/merged_data.pkl','rb'))
 	t1 = time.time()
 	
-	print(' ######################################################################### ')
+	print(' ========================================================================= ')
 	print(' Loading in raw game data took: ' + str(round(t1 -t0))  + ' seconds')
 	
 	game_stats = ['gameinfo','lastmeeting']
@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
 	t2 = time.time()
 
-	print(' ######################################################################### ')
+	print(' ========================================================================= ')
 	print(' Flattening to file took: ' + str(round(t2 -t1))  + ' seconds')
 
 	df = pd.DataFrame.from_dict(flattened_data, orient='index')
@@ -83,7 +83,7 @@ if __name__ == '__main__':
 	print(df.head())
 
 	
-	pickle.dump(df,open('./complete_df.pkl','wb'))
+	pickle.dump(df,open('./complete_unfiltered_df.pkl','wb'))
 
-	print(' ######################################################################### ')
+	print(' ========================================================================= ')
 	print(' Making and dumping dataframe to file took: ' + str(round(time.time() -t2))  + ' seconds')

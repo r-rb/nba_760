@@ -112,11 +112,10 @@ def player_table():
     pdc_dict['active_start'] = []
     pdc_dict['active_end'] = []
 
-    #print(df.loc[df['player_id'] == 2747])
     count = 0
     removed_keys = []
     names = []
-    for i in range(0, len(df)):
+    for i in range(0, 50000):
         if not(count% 100):
             print(count)
 
@@ -125,14 +124,13 @@ def player_table():
             years = players[df.iloc[i]['player_id']]
             if df.iloc[i]['player_id'] not in pdc_dict: 
                 pdc_dict[df.iloc[i]['player_id']] = []
-                pdc_dict['active_start'].append(years['active_start'])
-                pdc_dict['active_end'].append(years['active_end'])
                 for c in columns:
                     pdc_dict[c[1]].append(df.iloc[i][c[2]])
+                    pdc_dict['active_start'].append(years['active_start'])
+                    pdc_dict['active_end'].append(years['active_end'])
         except KeyError as e:
             names.append(df.iloc[i]['player_name'])
             removed_keys.append(df.iloc[i]['player_id'])
-
 
     print(removed_keys)
     df = pd.DataFrame(pdc_dict, columns=['player_id', 'player_name', 'active_start', 'active_end'])

@@ -1,0 +1,11 @@
+1. fantasy points,
+2. days since injury
+3. fantasy points per minute
+4. 
+
+
+Injury:
+    1. Doesnt contain "Suspen"
+    2. NWT: no "personal",no "suspen"
+    3. DND: contains "coach"
+    4. DNP: contains "coach"
