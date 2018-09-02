@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 import datetime as dt
 import pprint as pp
-df = pd.read_pickle('../pickle_data/player_game_stats.pkl')
+df = pd.read_pickle('../pickled_data/player_game_stats.pkl')
 print(len(df))
 
 df.comment = df.comment.fillna('')

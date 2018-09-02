@@ -16,7 +16,7 @@ def plot_player(pid,df):
     pass
 
 pid = "2544"
-df = pd.read_pickle('./player_game_stats.pkl')
+df = pd.read_pickle('../pickled_data/player_game_stats.pkl')
 
 # df["game_date"] = pd.to_datetime(df["game_date"])
 
