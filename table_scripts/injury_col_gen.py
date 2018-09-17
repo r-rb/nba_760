@@ -36,9 +36,9 @@ def add_injury_col():
 
     for i in range(n_rows):
         # Info for a row
-        if not(i%1000):
+        if not(i % 1000):
             print(i)
-            
+
         pid = df.iloc[i]["player_id"]
         season = get_season(df.iloc[i]["game_date"])
         has_injury = True if len(df.iloc[i]["comment"]) > 1 else False
@@ -60,11 +60,30 @@ def add_injury_col():
 
     print(df[df["player_id"] == '201935'][["days_since_injury","season"]])
 
-        
+    df.to_pickle("../pickled_data/pgs_with_inj_columns.pkl")
+
+def remove_injury_rows():
+    df = pd.read_pickle("../pickled_data/pgs_with_inj_columns.pkl")
+    print(len(df))
+
+    df = df[~(df["days_since_injury"]==0)]
+    df = df[~(df["pts"].isnull() | df["min"].isnull())]
+    parse_shit = lambda x: (float(x.split(":")[0]) + float(x.split(":")[1])/60)
+    min_col = df["min"].tolist()
+    d = [parse_shit(x) for x in min_col]
+
+    print(len(df))
+    df["min"] = d
+    df["fantasy_points"] = df["pts"] +  1.2 * df["reb"]  + 1.5 * df["ast"] + 3 * df["stl"] + 3 * df["blk"] - 1 * df["to"]
+
+    print(df[["game_id","pts","comment","min","fantasy_points"]])
+
+    df.to_pickle('../pickled_data/pgs_table_done.pkl')
 
 def main():
     # remove_non_injuries()
-    add_injury_col()
+    # add_injury_col()
+    remove_injury_rows()
 
 
 if __name__ == '__main__':
