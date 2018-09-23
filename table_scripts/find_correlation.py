@@ -27,7 +27,7 @@ def changePklValues():
     df.to_pickle('data_types_resolved.pkl')
 
 
-y = ['ast','blk','dreb','fg3_pct','fg3a','fg3m','fg_pct','fga','fgm','ft_pct','fta','ftm','min','oreb','pf','plus_minus','pts','reb','stl','to','last_inj']
+y = ['ast','blk','dreb','fg3_pct','fg3a','fg3m','fg_pct','fga','fgm','ft_pct','fta','ftm','min','oreb','pf','plus_minus','pts','reb','stl','to','last_inj','fantasy_points']
 
 # x =  df[y[1:]].corr(df['fantasy_points'])
 

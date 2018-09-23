@@ -6,8 +6,8 @@ import datetime as dt
 
 def plot_player(pid,df):
 
-    rows = df.loc[ (df['player_id'] == pid) & (df["season"] == "2015-2016") ]
-
+    # rows = df.loc[ (df['player_id'] == pid) & (df["season"] == "2015-2016") ]
+    rows = df.loc[ (df['player_id'] == pid)]
     plt.plot(rows["game_date"],rows["fantasy_points"],'-ro')
     plt.title(" Fantasy oints in a game vs Game Date")
     plt.show()
@@ -42,14 +42,14 @@ def plot_player_vs_team_seasons(pid,tid,season_list,df,game_df):
 
     #print(game_ids)
 
-pid = "201935"
+pid = "2544"
 tid = "1610612744"
 season = "2016-2017"
 season_list = ["2016-2017","2017-2018","2015-2016"]
-df = pd.read_pickle('../pickled_data/pgs_table_done.pkl')
-game_df = pd.read_pickle('../pickled_data/game.pkl')
+df = pd.read_pickle('../pgs_table_done.pkl')
+game_df = pd.read_pickle('../game.pkl')
 
-plot_player_vs_team_seasons(pid,tid,season_list,df,game_df)
+plot_player(pid,df)
 # df["game_date"] = pd.to_datetime(df["game_date"])
 
 # df.sort_values("game_date",inplace = True, ascending = False)
